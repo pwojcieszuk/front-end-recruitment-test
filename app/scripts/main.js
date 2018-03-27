@@ -73,4 +73,22 @@
   }
 
   // Your custom JavaScript goes here
+  (function(document){ 
+    var bacon = document.querySelector('img[alt=Bacon]');
+    if (! bacon) {
+      return;
+    }
+    var i = 0;
+    var baconContainer = bacon.parentNode;
+    document.querySelector('button[action=button]').addEventListener('click', function() { 
+      var clonedBacon = baconContainer.cloneNode(true);
+      baconContainer.parentNode.insertBefore(clonedBacon, baconContainer.nextSibling);
+      i++;
+
+      if (i > 3) {
+        alert("Ministry of health warns: Too much bacon may be bad for you :D")
+      }
+    });
+  })(document);
+  
 })();
