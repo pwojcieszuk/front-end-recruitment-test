@@ -1,0 +1,283 @@
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+@mixin placeholder {
+  @include optional-at-root('::-webkit-input-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('::-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-ms-input-placeholder') {
+    @content;
+  }
+}
+
+@mixin width-1 {
+    @media only screen and (min-width: 500px) { @content; }
+}
+
+@mixin width-2 {
+    @media only screen and (min-width: 800px) { @content; }
+}
+
+@mixin nicer-select {
+    select {
+      width: 98%;
+      border: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: transparent;
+      position: absolute;
+      background: transparent;
+      bottom: 0;
+      height: 60%;
+      z-index: 1;
+    }
+
+    /* CAUTION: IE hackery ahead */
+    select::-ms-expand { 
+        display: none; /* remove default arrow in IE 10 and 11 */
+    }
+
+    /* target Internet Explorer 9 to undo the custom arrow */
+    @media screen and (min-width:0\0) {
+        select {
+            background:none\9;
+            padding: 5px\9;
+        }
+    }
+
+    position: relative;
+    
+    i {
+        position: absolute;
+        z-index: 0;
+        bottom: 50%;
+        transform: translateY(50%);
+        right: 3%;
+        font-size: 1.6rem;
+    }
+}
+
+.radius {
+    border-radius: 5px;
+}
+
+.shadow {
+    box-shadow: 0px 2px 5px 0px #ccc;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+#overview {
+    padding-top: 0;
+
+    > div {
+        flex-grow: 1;
+    }
+
+    > form {
+        flex-grow: 2;
+    }
+
+    h2 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: #000;
+        font-weight: bold;
+
+        i {
+            font-size: 1rem;
+            margin-left: .6rem;
+            vertical-align: text-top;
+        }
+    }
+
+    .checkout-info {
+        background: #fff;
+        margin-top: 3.7rem;
+        margin-left: 2.3rem;
+        margin-right: auto;
+        padding: 0.4rem;
+        min-width: 280px;
+
+        font-size: 0.9rem;
+        color: #000;
+
+        @extend .radius;
+        @extend .shadow;
+
+        @include width-1 {
+            margin-right: 0.8rem;
+        }
+
+        @include width-2 {
+            float: right;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        > div {
+            padding: 0.4rem 1rem;
+            border: solid 1px dashed #ebebeb;
+            @extend .radius;
+        }
+
+        h2 {
+            margin: 0;
+            line-height: 2rem;
+            height: 2rem;
+        }
+
+        section {
+            margin: 1rem 0;
+            border-bottom: solid 1px dashed #ebebeb;
+            padding-bottom: 1.6rem;
+
+            &:last-of-type {
+                border-bottom: none;
+            }
+
+            > div {
+                margin-bottom: 0.7rem;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+        .price:before {
+            content: "$ ";
+        }
+
+        .totals {
+            font-weight: bold;
+
+            .price {
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    .checkout-form h2 {
+        margin: 2rem 0 0 0;
+        height: 3rem;
+
+        &::before {
+            background: #000;
+            border-radius: 50%;
+            color: #fff;
+            width: 1.45rem;
+            height: 1.45rem;
+            display: inline-block;
+            line-height: 1.45rem;
+            text-align: center;
+            font-size: 1.1rem;
+            margin-right: 1rem;
+        }
+
+        &:nth-of-type(1) {
+            &::before {
+                content: "1";
+            }
+        }
+
+        &:nth-of-type(2) {
+            &::before {
+                content: "2";
+            }
+        }
+    }
+
+    fieldset {
+        margin-left: 1.7rem;
+    }
+
+    label,
+    button {
+        display: inline-block;
+        background: #fff;
+        padding: 0.2rem 0.6rem;
+        width: 98%;
+        margin: 0.7rem;
+        min-height: 3.5rem;
+
+        @extend .radius;
+        @extend .shadow;
+    }
+
+    label {
+        @include nicer-select;
+    }
+
+    @include width-1 {
+        .input-cont {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+    }
+
+    label > span {
+        display: block;
+        font-size: 0.825rem;
+        font-weight: bold;
+    }
+
+    input,
+    select,
+    button {
+        width: 100%;
+        border: none;
+        outline: none;
+        color: rgb(155, 155, 155);
+        font-size: 1.15rem;
+
+        @include placeholder {
+            color: rgb(155, 155, 155);
+            font-size: 1.15rem;
+        }
+    }
+
+    button {
+        text-transform: uppercase;
+        color: #fff;
+        background: #6dd322;
+        font-weight: bold;
+        font-size: 0.9rem;
+        cursor: pointer;
+        margin-top: 2.5rem;
+
+        &:hover {
+            background: #4f9a19;
+        }
+
+        i {
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+            vertical-align: middle;
+        }
+    }
+    
+    @include width-2 {
+        flex-direction: row-reverse;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
