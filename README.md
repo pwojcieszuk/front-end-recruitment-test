@@ -1,3 +1,17 @@
+# Some remarks to this solution
+
+ - Credit card in real life should be validated by checking against card types - not doing it here, I figure you want to check if I can implement validation in general. I am just providing some example validation like number of digits here.
+
+ - Credit card image is not present - in real life I would probably try to detect credit card type and display related image. If possible, I ‘d use external library with good record of security precautions.
+
+- Most solutions used should work in all standard modern browsers (IE10+, though IE9 should theoretically be ok with most of them). Tested in latest Chrome, FF and Safari on MacOs. In real life, I would probably consider broader browser range, depending on specified requirements.
+
+- Final form submit is not handled - we could do it by either allowing standard form submit and page reload or by handling form values in some sort of fetch request. Personally, I’d probably use ajax and handle the result in promise chain.
+
+- I am also assuming there is just one form with these values on the page. Most of the time when I would be writing a widget I would think about ways to namespace all code (js and css/scss) so that multiple instances of the same widget could be used without conflicts. I am not doing it for this task, I believe  that having multiple checkout forms on one page is quite a specific use case.
+
+- I did refactor js code to satisfy the built-in linter complaints, but if it were my real project, I'd use different config - in my opinion, restriction like max 80 chars in a line or no alerts are debatable. Left some errors where refactoring them would be a big inconvenience (long regular expressions for example). I did not have the stamina to go through GWT linter config, sorry.
+
 # Snowdog Front-end Recruitment test
 
 Test is based on [Google Web Starter Kit](https://github.com/google/web-starter-kit) v0.6.5
