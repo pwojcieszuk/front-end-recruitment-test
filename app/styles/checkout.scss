@@ -70,12 +70,19 @@
     }
 }
 
+@mixin shadow($color) {
+    box-shadow: 0px 2px 5px 0px $color;
+}
+
+$error-red: #ff0000;
+$green: #6dd322;
+
 .radius {
     border-radius: 5px;
 }
 
 .shadow {
-    box-shadow: 0px 2px 5px 0px #ccc;
+    @include shadow(#ccc);
 }
 
 html {
@@ -87,14 +94,6 @@ html {
 
 #overview {
     padding-top: 0;
-
-    > div {
-        flex-grow: 1;
-    }
-
-    > form {
-        flex-grow: 2;
-    }
 
     h2 {
         font-size: 0.9rem;
@@ -209,7 +208,8 @@ html {
     }
 
     label,
-    button {
+    button,
+    .messages {
         display: inline-block;
         background: #fff;
         padding: 0.2rem 0.6rem;
@@ -223,13 +223,10 @@ html {
 
     label {
         @include nicer-select;
-    }
+        border: solid 1px transparent;
 
-    @include width-1 {
-        .input-cont {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
+        &.error {
+            @include shadow($error-red);
         }
     }
 
@@ -241,7 +238,7 @@ html {
 
     input,
     select,
-    button {
+    button{
         width: 100%;
         border: none;
         outline: none;
@@ -257,7 +254,7 @@ html {
     button {
         text-transform: uppercase;
         color: #fff;
-        background: #6dd322;
+        background: $green;
         font-weight: bold;
         font-size: 0.9rem;
         cursor: pointer;
@@ -273,9 +270,48 @@ html {
             vertical-align: middle;
         }
     }
+
+    .messages {
+        margin-top: 2.5rem;
+        display: none;
+
+        > div {
+            padding: 0.5rem;
+
+            &:first-child {
+                padding-top: 1.5rem;
+            }
+            &:last-child {
+                padding-bottom: 1.5rem;
+            }
+        }
+
+        &.error,
+        &.success {
+            display: initial;
+        }
+
+        &.error {
+            background: $error-red;
+            color: #fff;
+            @include shadow($error-red);
+        }
+
+        &.success {
+            background: $green;
+            color: #fff;
+        }
+    }
+
+    @include width-1 {
+        .input-cont {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+    }
     
     @include width-2 {
-        flex-direction: row-reverse;
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
